@@ -5,15 +5,39 @@ export class News extends Component {
     constructor() {
         super();
         this.state = {
-            articles: []
+            articles: [],
+            page: 1
         }
     }
     async componentDidMount(){
-        let url="https://newsapi.org/v2/top-headlines?country=in&apiKey=f960f87324774e189d71a9366c7f3b85"
+        let url="https://newsapi.org/v2/top-headlines?country=in&apiKey=f960f87324774e189d71a9366c7f3b85&page=1"
         let data = await fetch(url)
         let parseData = await data.json()
         console.log(parseData)
         this.setState({articles: parseData.articles})
+    }
+
+    handleNextClick = async ()=>{
+        console.log("Next")
+        let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=f960f87324774e189d71a9366c7f3b85&page=${this.state.page + 1}`
+        let data = await fetch(url)
+        let parseData = await data.json()
+        console.log(parseData)
+        this.setState({
+            articles: parseData.articles,
+            page: this.state.page + 1
+        })
+    }
+    handlePrevClick = async ()=>{
+        console.log("Previous")
+        let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=f960f87324774e189d71a9366c7f3b85&page=${this.state.page - 1}`
+        let data = await fetch(url)
+        let parseData = await data.json()
+        console.log(parseData)
+        this.setState({
+            articles: parseData.articles,
+            page: this.state.page - 1
+        })
     }
 
     render() {
@@ -30,6 +54,10 @@ export class News extends Component {
                             }
                         )
                     }
+                </div>
+                <div className="container d-flex justify-content-between">
+                <button disabled={this.state.page<=1} type="button" className="btn btn-info" onClick={this.handlePrevClick}>Previous</button>
+                <button type="button" className="btn btn-info" onClick={this.handleNextClick}>Next</button>
                 </div>
             </div>
         )
