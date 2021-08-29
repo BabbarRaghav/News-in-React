@@ -5,7 +5,7 @@ export class NewsItem extends Component {
         let { title, description, imageURL, newsURL, author, date, source } = this.props
         return (
             <div>
-                <div className="card" style={{ height: "40rem" }}>
+                <div className="card" style={{ height: "45rem" }}>
                     <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger" style={{ left: "50%", zIndex: "1" }}>
                         {source}
                     </span>
